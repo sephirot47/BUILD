@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BCubeCM : ContextualMenu 
+public class BBlockCM : ContextualMenu 
 {
 	void Start () 
     {

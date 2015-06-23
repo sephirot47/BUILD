@@ -6,7 +6,11 @@ public class ContextualMenu : MonoBehaviour, IGameStateListener
     [HideInInspector]
     public Buildable parentBuildable;
 
-    public void Start() { }
+    public void Start() 
+    {
+        GSM.GoTo(GSM.Contextual);
+    }
+
 	public void Update () 
     {
         if(Input.GetKeyUp(KeyCode.Escape))
@@ -26,6 +30,7 @@ public class ContextualMenu : MonoBehaviour, IGameStateListener
     {
         Destroy(gameObject);
         if (parentBuildable) parentBuildable.OnContextualMenuClosed();
+        GSM.GoTo(GSM.Playing);
     }
 
     public void OnGameStateChange(GameState previousState, GameState newState)

@@ -25,7 +25,6 @@ public class Inventory : MonoBehaviour, IGameStateListener
 
     public void OnGameStateChange(GameState previousState, GameState newState)
     {
-        Debug.Log("LaLALALLALALALL");
         if (newState == GSM.Inventory)  CanvasUtils.Show(gameObject);
         else  CanvasUtils.Hide(gameObject);
     }
