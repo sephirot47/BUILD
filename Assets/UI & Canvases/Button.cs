@@ -6,6 +6,7 @@ public class Button : MonoBehaviour
     public float defaultAlpha = 0.5f, overAlpha = 0.9f;
     public GameObject buildablePrefab;
     public KeyCode boundKey;
+    public Inventory parentInventory;
 
 	void Start () 
     {
@@ -14,9 +15,9 @@ public class Button : MonoBehaviour
 	
 	void Update () 
     {
-        if (GC.cMenu) return;
+        if ( GSM.CurrentStateIs(GSM.Contextual) ) return;
 
-	    if(GC.inventory.IsOpen() && CanvasUtils.MouseOver(gameObject))
+        if (GSM.CurrentStateIs(GSM.Inventory) && CanvasUtils.MouseOver(gameObject))
         {
             CanvasUtils.SetAlpha(gameObject, overAlpha);
             if (Input.GetMouseButtonUp(0)) OnClick();
@@ -32,7 +33,7 @@ public class Button : MonoBehaviour
     void OnKey()
     {
         OnClick();
-        if (GC.inventory.IsOpen()) GC.inventory.TriggerOpenClose();
+        parentInventory.Close();
     }
 
     void OnClick()

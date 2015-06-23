@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BEngine : Accessory 
+public class BEngine : Accessory
 {
     public float force = 350.0f;
     public Vector3 rotationAxis = Vector3.up;
@@ -33,5 +33,4 @@ public class BEngine : Accessory
             rb.AddTorque(axis * force * Time.deltaTime);
         }
     }
-
 }

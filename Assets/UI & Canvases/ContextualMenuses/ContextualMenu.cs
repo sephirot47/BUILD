@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ContextualMenu : MonoBehaviour 
+public class ContextualMenu : MonoBehaviour, IGameStateListener
 {
     [HideInInspector]
     public Buildable parentBuildable;
 
-    public void Start() { GC.cMenu = this; }
+    public void Start() { }
 	public void Update () 
     {
         if(Input.GetKeyUp(KeyCode.Escape))
@@ -24,8 +24,12 @@ public class ContextualMenu : MonoBehaviour
 
     public void OnCloseButtonClicked()
     {
-        GC.cMenu = null;
         Destroy(gameObject);
         if (parentBuildable) parentBuildable.OnContextualMenuClosed();
+    }
+
+    public void OnGameStateChange(GameState previousState, GameState newState)
+    {
+        if (newState != GSM.Contextual) OnCloseButtonClicked();
     }
 }

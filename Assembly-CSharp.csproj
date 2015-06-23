@@ -58,6 +58,9 @@
      <Compile Include="Assets\UI &amp; Canvases\ContextualMenuses\BCubeCM.cs" />
      <Compile Include="Assets\UI &amp; Canvases\ContextualMenuses\BEngineCM\BEngineCM.cs" />
      <Compile Include="Assets\UI &amp; Canvases\ContextualMenuses\ContextualMenu.cs" />
+     <Compile Include="Assets\UI &amp; Canvases\GSM.cs" />
+     <Compile Include="Assets\UI &amp; Canvases\GameState.cs" />
+     <Compile Include="Assets\UI &amp; Canvases\IGameStateListener.cs" />
      <Compile Include="Assets\UI &amp; Canvases\Inventory.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -38,7 +38,7 @@ public class Buildable : MonoBehaviour
                 SetMode(Mode.Select);
                 if (Input.GetMouseButtonUp(1))
                 {
-                    if (contextualMenuPrefab && !GC.cMenu && !GC.inventory.IsOpen())
+                    if (contextualMenuPrefab && GSM.CurrentStateIs(GSM.Playing))
                     {
                         cmenu = Instantiate(contextualMenuPrefab);
                         cmenu.parentBuildable = this;

@@ -17,7 +17,7 @@ public class PlayerBuilding : MonoBehaviour
 	
 	void Update () 
     {
-        if(GC.inventory.IsOpen() || GC.cMenu) return;
+        if( !GSM.CurrentStateIs(GSM.Playing) ) return;
 
         if (Input.GetKeyUp(KeyCode.Backslash) || Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(2))
         {
@@ -34,7 +34,7 @@ public class PlayerBuilding : MonoBehaviour
                 {
                     if (currentBuildable) currentBuildable.OnPlayerBuildDone(GetTargetBuildable());
                     currentBuildable = null;
-                    //OnBuildableChoosed(currentBuildablePrefab); //Reiniciamos (vuelve a aparecer el buildable para construir) 
+                    //nOnBuildableChoosed(currentBuildablePrefab); //Reiniciamos (vuelve a aparecer el buildable para construir) 
                 }
             }
         }

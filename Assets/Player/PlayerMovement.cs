@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	void Update () 
     {
-        if (GC.inventory.IsOpen() || GC.cMenu) return;
+        if (!GSM.CurrentStateIs(GSM.Playing)) return;
 
         HandleLooking();
         HandleMovement();

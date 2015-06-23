@@ -11,7 +11,6 @@ public class GC : MonoBehaviour
     public Inventory _inventory;
 
     public static bool physicsPaused = true;
-    public static ContextualMenu cMenu = null;
 
     void Awake()
     {
@@ -26,12 +25,7 @@ public class GC : MonoBehaviour
 	
 	void Update () 
     {
-	    if(Input.GetKeyUp(KeyCode.I) && !cMenu)
-        {
-            inventory.TriggerOpenClose();
-        }
-
-        if (Input.GetKeyUp(KeyCode.P) )
+        if (Input.GetKeyUp(KeyCode.P) && !GSM.CurrentStateIs(GSM.Paused) )
         {
             if (physicsPaused) ResumePhysics(); 
             else PausePhysics();
@@ -42,10 +36,7 @@ public class GC : MonoBehaviour
     {
         physicsPaused = true;
         List<Buildable> bs = new List<Buildable>( GameObject.FindObjectsOfType<Buildable>() );
-        foreach(Buildable b in bs)
-        {
-            b.OnPausePhysics();
-        }
+        foreach(Buildable b in bs) b.OnPausePhysics();
 
         player.GetComponent<PlayerBuilding>().OnPausePhysics();
 
@@ -57,10 +48,7 @@ public class GC : MonoBehaviour
     {
         physicsPaused = false;
         List<Buildable> bs = new List<Buildable>(GameObject.FindObjectsOfType<Buildable>());
-        foreach (Buildable b in bs)
-        {
-            b.OnResumePhysics();
-        }
+        foreach (Buildable b in bs) b.OnResumePhysics();
 
         player.GetComponent<PlayerBuilding>().OnResumePhysics();
 
@@ -82,4 +70,15 @@ public class GC : MonoBehaviour
         return null;
     }
 
+    public static List<T> GetComponentsInWorldOfType<T>()
+    {
+        List<T> result = new List<T>();
+        GameObject[] gameListeners = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject go in gameListeners)
+        {
+            T comp = go.GetComponent<T>();
+            if (comp != null) result.Add(comp);
+        }
+        return result;
+    }
 }
