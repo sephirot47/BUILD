@@ -53,6 +53,7 @@
      <Compile Include="Assets\GC.cs" />
      <Compile Include="Assets\Player\PlayerBuilding.cs" />
      <Compile Include="Assets\Player\PlayerMovement.cs" />
+     <Compile Include="Assets\Player\PlayerSelection.cs" />
      <Compile Include="Assets\UI &amp; Canvases\Button.cs" />
      <Compile Include="Assets\UI &amp; Canvases\CanvasUtils.cs" />
      <Compile Include="Assets\UI &amp; Canvases\ContextualMenuses\BBlockCM.cs" />

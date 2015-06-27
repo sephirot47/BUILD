@@ -34,7 +34,7 @@ public class GSM : MonoBehaviour
         {
             GameState lastState = currentState;
             currentState = state;
-            List<IGameStateListener> gameStateListeners = GC.GetComponentsInWorldOfType<IGameStateListener>();
+            List<IGameStateListener> gameStateListeners = GC.GetAll<IGameStateListener>();
             foreach(IGameStateListener gsl in gameStateListeners)
             {
                 gsl.OnGameStateChange(lastState, currentState);

@@ -2,17 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Buildable : MonoBehaviour 
+public class Buildable : MonoBehaviour, IGameStateListener
 {
     public enum Mode
     {
-        Build, Select, Destroy, Default
+        Build, Over, Select, Destroy, Default
     };
 
     public float mass = 1.0f;
     public float anchorOffsetScale = 0.0f;
     
-    public Material buildMaterial, selectMaterial, destroyMaterial;
+    public Material buildMaterial, overMaterial, selectMaterial, destroyMaterial;
     public Material defaultMaterial;
 
     public ContextualMenu contextualMenuPrefab;
@@ -31,30 +31,6 @@ public class Buildable : MonoBehaviour
     public virtual void Update() 
     {
         HandlePositioning();
-        if (currentMode != Mode.Build)
-        {
-            if (MouseOver())
-            {
-                SetMode(Mode.Select);
-                if (Input.GetMouseButtonUp(1))
-                {
-                    if (contextualMenuPrefab && GSM.CurrentStateIs(GSM.Playing))
-                    {
-                        cmenu = Instantiate(contextualMenuPrefab);
-                        cmenu.parentBuildable = this;
-                        return;
-                    }
-                }
-                else if (Input.GetMouseButtonUp(2))
-                {
-                    this.Destroy();
-                }
-            }
-            else
-            {
-                SetMode(Mode.Default);
-            }
-        }
 	}
 
     public void OnContextualMenuClosed()
@@ -70,6 +46,53 @@ public class Buildable : MonoBehaviour
             transform.rotation = GetBuildRotation();
         }
     }
+
+    ////////////////////////////////////////////////
+    public void OnMouseIsOver()
+    {
+        Debug.Log("Over: " + name);
+        if(!IsSelected())
+            SetMode(Mode.Over);
+    }
+
+    public void OnLeftClick()
+    {
+        if (!IsSelected())
+            SetMode(Mode.Select);
+        else SetMode(Mode.Over);
+    }
+
+    public void OnRightClick()
+    {
+        if (contextualMenuPrefab && GSM.CurrentStateIs(GSM.Playing))
+        {
+            cmenu = Instantiate(contextualMenuPrefab);
+            cmenu.parentBuildable = this;
+        }
+    }
+
+    public void OnMiddleClick()
+    {
+        this.Destroy();
+    }
+
+    public void OnClickOutside()
+    {
+        SetMode(Mode.Default);
+    }
+
+    public void OnMouseIsOut()
+    {
+        if(!IsSelected())
+            SetMode(Mode.Default);
+    }
+
+    public bool IsSelected()
+    {
+        return currentMode == Mode.Select;
+    }
+
+    ////////////////////////////////////////////////
 
     public void AttachBuildable(Buildable b)
     {
@@ -128,6 +151,7 @@ public class Buildable : MonoBehaviour
     {
         currentMode = mode;
         if (currentMode == Mode.Build) GetComponent<MeshRenderer>().material = buildMaterial;
+        else if (currentMode == Mode.Over) GetComponent<MeshRenderer>().material = overMaterial;
         else if (currentMode == Mode.Select) GetComponent<MeshRenderer>().material = selectMaterial;
         else if (currentMode == Mode.Destroy) GetComponent<MeshRenderer>().material = destroyMaterial;
         else GetComponent<MeshRenderer>().material = defaultMaterial;
@@ -170,5 +194,18 @@ public class Buildable : MonoBehaviour
     {
         if (invisible) GetComponent<MeshRenderer>().enabled = false;
         else GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    public void OnGameStateChange(GameState previousState, GameState newState)
+    {
+        if(previousState == GSM.Playing)
+        {
+            if(currentMode != Mode.Build) SetMode(Mode.Default);
+        }
+
+        if(newState == GSM.Playing)
+        {
+            if (currentMode != Mode.Build) SetMode(Mode.Default);
+        }
     }
 }

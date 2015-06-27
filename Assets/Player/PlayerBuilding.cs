@@ -69,6 +69,11 @@ public class PlayerBuilding : MonoBehaviour
         currentBuildable.SetMode(Buildable.Mode.Build);
     }
 
+    public bool IsBuilding()
+    {
+        return currentBuildable != null;
+    }
+
     public Ray GetViewRay()
     {
         Vector3 forward = GetComponentInChildren<Camera>().transform.forward;

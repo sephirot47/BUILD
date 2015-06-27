@@ -9,14 +9,17 @@ public class ContextualMenu : MonoBehaviour, IGameStateListener
     public void Start() 
     {
         GSM.GoTo(GSM.Contextual);
+        parentBuildable.SetMode(Buildable.Mode.Select);
     }
 
 	public void Update () 
     {
+        /*
         if(Input.GetKeyUp(KeyCode.Escape))
         {
             OnCloseButtonClicked();
         }
+        */
 
         /*
         if (Input.GetMouseButtonUp(1) || Input.GetMouseButtonUp(0))
@@ -31,6 +34,7 @@ public class ContextualMenu : MonoBehaviour, IGameStateListener
         Destroy(gameObject);
         if (parentBuildable) parentBuildable.OnContextualMenuClosed();
         GSM.GoTo(GSM.Playing);
+        parentBuildable.SetMode(Buildable.Mode.Select);
     }
 
     public void OnGameStateChange(GameState previousState, GameState newState)

@@ -70,7 +70,7 @@ public class GC : MonoBehaviour
         return null;
     }
 
-    public static List<T> GetComponentsInWorldOfType<T>()
+    public static List<T> GetAll<T>()
     {
         List<T> result = new List<T>();
         GameObject[] gameListeners = GameObject.FindObjectsOfType<GameObject>();
